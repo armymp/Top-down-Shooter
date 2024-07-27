@@ -46,6 +46,11 @@ public class PlayerMovement : MonoBehaviour
         AnimatorControllers();
     }
 
+    private void Shoot()
+    {
+        _animator.SetTrigger("Fire");
+    }
+
     private void AnimatorControllers()
     {
         bool playRunAnimation = _isRunning && _movementDirection.magnitude > 0;
@@ -104,7 +109,8 @@ public class PlayerMovement : MonoBehaviour
     private void AssignInputEvents()
     {
         _controls = new PlayerControls();
-        
+
+        _controls.Character.Fire.performed += context => Shoot();
         
         _controls.Character.Movement.performed += context => _moveInput = context.ReadValue<Vector2>();
         _controls.Character.Movement.canceled += context => _moveInput = Vector2.zero;
